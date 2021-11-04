@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class HomeWork4 {
 
-    //private static final char DOT_X = 'X';
-    //private static final char DOT_0 = '0';
+    private static final char DOT_X = 'X';
+    private static final char DOT_0 = '0';
     private static final char DOT_EMPTY = '_';
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -14,23 +14,35 @@ public class HomeWork4 {
     private static char[][] field;
     private static int fieldSizeX;
     private static int fieldSizeY;
-    //private static int scoreHuman;
-    //private static int scoreAi;
-    //private static int roundCounter;
-    //private static int vinLength;
+    private static int scoreHuman;
+    private static int scoreAi;
+    private static int roundCounter;
+    private static int vinLength;
 
     public static void main(String[] args) {
+        sizeField();//размеры поля
+       //ход игрока
+        int x;
+        int y;
+
+        System.out.println("Введите координаты вашего хода X и Y, разделенные пробелами >>>");
+        x = scanner.nextInt() - 1;
+        y = scanner.nextInt() - 1;
+        field[y][x] = DOT_X;
+
+        printField();
+    }
+    //размеры поля
+    private static void sizeField() {
         int y;
         int x;
 
         System.out.print("Введите размер поля >>>\n");
-        x = scanner.nextInt();
         y = scanner.nextInt();
+        x = scanner.nextInt();
         initField(y, x);
         printField();
     }
-
-
     //инициализация поля
     private static void initField(int sizeX, int sizeY) {
         fieldSizeX = sizeX;
@@ -61,6 +73,5 @@ public class HomeWork4 {
         }
         System.out.println();
     }
-
 
 }
