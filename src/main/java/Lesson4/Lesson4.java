@@ -48,6 +48,26 @@ public class Lesson4 {
         System.out.printf("Раунд %d начали!!\n", ++roundCounter);
         initField(3, 3);
         printField();
+        if (dotHuman == DOT_X) {
+            humanFirstTurn();
+        } else {
+            aiFirstTurn();
+        }
+    }
+
+    //первый ход Ai
+    private static void aiFirstTurn() {
+        while (true) {
+            aiTurn();
+            printField();
+            if (checkGame(dotAi)) break;
+            humanTurn();
+            printField();
+            if (checkGame(dotHuman)) break;
+        }
+    }
+    //первый ход игрока
+    private static void humanFirstTurn() {
         while (true) {
             humanTurn();
             printField();
@@ -57,10 +77,11 @@ public class Lesson4 {
             if (checkGame(dotAi)) break;
         }
     }
+
     //распределение фишек Х и 0
     private static void chooseTheDot(){
         System.out.print("Если вы хотите играть 'X'  тогда введите 'X', иначе введити любой символ >>>");
-        if (scanner.next().toLowerCase().equals("X")) {
+        if (scanner.next().toLowerCase().equals("x")) {
             dotHuman = DOT_X;
             dotAi = DOT_0;
         } else {
@@ -104,7 +125,7 @@ public class Lesson4 {
             x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
         } while (!isCellValid(y, x) || !isCellEmpty(y, x));
-        field[y][x] = DOT_X;
+        field[y][x] = dotHuman;
     }
     //победа
     private static boolean checkWin(char dot) {
