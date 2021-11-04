@@ -1,5 +1,6 @@
 package Lesson4;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,6 +13,9 @@ public class Lesson4 {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
     private static char[][] field;
+    private static char dotHuman;
+    private static char dotAi;
+
     private static int fieldSizeX;
     private static int fieldSizeY;
     private static int scoreHuman;
@@ -19,28 +23,68 @@ public class Lesson4 {
     private static int roundCounter;
     private static int vinLength;
 
+
     public static void main(String[] args) {
 
+        play();
+
+    }
+
+    private static void play(){
+        while (true){
+            chooseTheDot();
+            playRound();
+        System.out.printf("Счет: Игрок    Ai\n" + "" +
+                "       %d        %d\n", scoreHuman, scoreAi);
+        System.out.println("Хотите ли сыграть еще раз? Y или N >>>");
+        if (!scanner.next().toLowerCase().equals("y")){
+            System.out.println("Good bye!");
+            break;
+            }
+        }
+    }
+    //раунд
+    private static void playRound() {
+        System.out.printf("Раунд %d начали!!\n", ++roundCounter);
         initField(3, 3);
         printField();
         while (true) {
             humanTurn();
             printField();
-           if (checkWin(DOT_X)) {
-              System.out.println("Победил игрок!");
-            break;
-            }
-            if (checkDraw()) break;
+            if (checkGame(dotHuman)) break;
             aiTurn();
-            if (checkWin(DOT_0)) {
-                System.out.println("Победил Ai!");
-                break;
-            }
-            if (checkDraw()) break;
             printField();
+            if (checkGame(dotAi)) break;
         }
     }
-
+    //распределение фишек Х и 0
+    private static void chooseTheDot(){
+        System.out.print("Если вы хотите играть 'X'  тогда введите 'X', иначе введити любой символ >>>");
+        if (scanner.next().toLowerCase().equals("X")) {
+            dotHuman = DOT_X;
+            dotAi = DOT_0;
+        } else {
+            dotHuman = DOT_0;
+            dotAi = DOT_X;
+        }
+    }
+    //проверка игры
+    private static boolean checkGame(char dot){
+        if (checkWin(dot)) {
+            if (dot == dotHuman){
+            System.out.println("Победил игрок!");
+            scoreHuman++;
+            } else {
+                System.out.println("Победил Ai!");
+                scoreAi++;
+            }
+            return true;
+        }
+        if (checkDraw()) {
+            return true;
+        }
+        return false;
+    }
     //ход Ai
     private static void aiTurn() {
         int x;
@@ -49,7 +93,7 @@ public class Lesson4 {
             x = random.nextInt(fieldSizeX);
             y = random.nextInt(fieldSizeY);
         } while (!isCellEmpty(y, x));
-        field[y][x] = DOT_0;
+        field[y][x] = dotAi;
     }
     //ход игрока
     private static void humanTurn() {
@@ -138,6 +182,5 @@ public class Lesson4 {
 //            System.out.println();
 //        }
         }
-
 
     }
