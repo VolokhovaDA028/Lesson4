@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class HomeWork4 {
 
-    private static final char DOT_X = 'X';
-    private static final char DOT_0 = '0';
+    //private static final char DOT_X = 'X';
+    //private static final char DOT_0 = '0';
     private static final char DOT_EMPTY = '_';
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -14,10 +14,10 @@ public class HomeWork4 {
     private static char[][] field;
     private static int fieldSizeX;
     private static int fieldSizeY;
-    private static int scoreHuman;
-    private static int scoreAi;
-    private static int roundCounter;
-    private static int vinLength;
+    //private static int scoreHuman;
+    //private static int scoreAi;
+    //private static int roundCounter;
+    //private static int vinLength;
 
     public static void main(String[] args) {
         int y;
