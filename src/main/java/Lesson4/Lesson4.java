@@ -23,10 +23,20 @@ public class Lesson4 {
 
         initField(3, 3);
         printField();
-        while (true){
+        while (true) {
             humanTurn();
             printField();
+           if (checkWin(DOT_X)) {
+              System.out.println("Победил игрок!");
+            break;
+            }
+            if (checkDraw()) break;
             aiTurn();
+            if (checkWin(DOT_0)) {
+                System.out.println("Победил Ai!");
+                break;
+            }
+            if (checkDraw()) break;
             printField();
         }
     }
@@ -41,7 +51,6 @@ public class Lesson4 {
         } while (!isCellEmpty(y, x));
         field[y][x] = DOT_0;
     }
-
     //ход игрока
     private static void humanTurn() {
         int x;
@@ -51,19 +60,44 @@ public class Lesson4 {
             x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
         } while (!isCellValid(y, x) || !isCellEmpty(y, x));
-            field[y][x] = DOT_X;
+        field[y][x] = DOT_X;
     }
+    //победа
+    private static boolean checkWin(char dot) {
+        //горизонталь
+        if (field[0][0] == dot && field[0][1] == dot && field[0][2] == dot) return true;
+        if (field[1][0] == dot && field[1][1] == dot && field[1][2] == dot) return true;
+        if (field[2][0] == dot && field[2][1] == dot && field[2][2] == dot) return true;
+        //вертикаль
+        if (field[0][0] == dot && field[1][0] == dot && field[2][0] == dot) return true;
+        if (field[0][1] == dot && field[1][1] == dot && field[2][1] == dot) return true;
+        if (field[0][2] == dot && field[1][2] == dot && field[2][2] == dot) return true;
+        //диагональ
+        if (field[0][0] == dot && field[1][1] == dot && field[2][2] == dot) return true;
+        if (field[0][2] == dot && field[1][1] == dot && field[2][0] == dot) return true;
+        return false;
+    }
+    //ничья
+    private static boolean checkDraw() {
+        for (int y = 0; y < fieldSizeY; y++){
+            for (int x = 0; x < fieldSizeX; x++){
+                if (isCellEmpty(y, x)){
+                    return false;
+                }
+            }
 
+        }
+        System.out.println("Ничья!");
+        return true;
+    }
     //проверка заполненности поля
     private static boolean isCellEmpty(int x, int y){
         return field[y][x] == DOT_EMPTY;
     }
-
     //проверка введенных координат
     private static boolean isCellValid(int x, int y){
         return x >= 0 && y >= 0 && x < fieldSizeX && y < fieldSizeY;
     }
-
     private static void initField(int sizeX, int sizeY) {
             fieldSizeX = sizeX;
             fieldSizeY = sizeY;
@@ -74,7 +108,6 @@ public class Lesson4 {
                 }
             }
         }
-
     //печать поля
     private static void printField() {
             System.out.print("+");
@@ -105,4 +138,6 @@ public class Lesson4 {
 //            System.out.println();
 //        }
         }
+
+
     }
